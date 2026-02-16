@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboardFragment"
+        android:title="Dashboard"
+        android:icon="@android:drawable/ic_menu_view"/>
+
+    <item
+        android:id="@+id/projectsFragment"
+        android:title="Projects"
+        android:icon="@android:drawable/ic_menu_agenda"/>
+
+    <item
+        android:id="@+id/expensesFragment"
+        android:title="Expenses"
+        android:icon="@android:drawable/ic_menu_compass"/>
+
+</menu>
