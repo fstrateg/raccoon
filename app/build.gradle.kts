@@ -44,6 +44,14 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+
+    // Room (работа с базой данных)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
+    // Lifecycle
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
