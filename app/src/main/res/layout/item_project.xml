@@ -13,6 +13,7 @@
         android:text="Project title"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="@color/sc_text_primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_amount"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,6 +22,7 @@
 
     <TextView
         android:id="@+id/tv_amount"
+        android:textColor="@color/sc_accent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1000"

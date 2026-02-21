@@ -2,8 +2,10 @@ package com.alexeym.raccoon;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Button;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +17,12 @@ import com.alexeym.raccoon.viewmodel.ProjectViewModel;
 
 public class DashboardFragment extends Fragment {
 
+    private static final int GOAL = 10000;
     private ProjectViewModel viewModel;
     private TextView tvBalance;
-    private Button btnAddTest;
+
+    private final NumberFormat numberFormat =
+            NumberFormat.getInstance(new Locale("ru", "RU"));
 
     public DashboardFragment() {
         super(R.layout.fragment_dashboard);
@@ -28,24 +33,31 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tvBalance = view.findViewById(R.id.tv_balance);
-        btnAddTest = view.findViewById(R.id.btn_add_test);
 
         viewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
+        TextView tvGoal = view.findViewById(R.id.tv_goal);
+        TextView tvPercent = view.findViewById(R.id.tv_percent);
+        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+
+
+
         viewModel.getBalance().observe(getViewLifecycleOwner(), balance -> {
+
             if (balance == null) balance = 0;
-            tvBalance.setText("Balance: " + balance);
-        });
 
-        btnAddTest.setOnClickListener(v -> {
-            Project test = new Project();
-            test.title = "Test income";
-            test.amount = 1000;
-            test.type = 1;
-            test.createdAt = System.currentTimeMillis();
-            test.updatedAt = System.currentTimeMillis();
+            String formattedBalance = numberFormat.format(balance);
+            String formattedGoal = numberFormat.format(GOAL);
+            tvGoal.setText("/ " + formattedGoal);
+            tvBalance.setText(String.valueOf(formattedBalance));
 
-            viewModel.insert(test);
+            int percent = (int) ((balance * 100.0f) / GOAL);
+
+            if (percent > 100) percent = 100;
+            if (percent < 0) percent = 0;
+
+            tvPercent.setText(percent + "%");
+            progressBar.setProgress(percent);
         });
     }
 }

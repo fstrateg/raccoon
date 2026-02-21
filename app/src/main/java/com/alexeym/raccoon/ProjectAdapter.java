@@ -1,11 +1,13 @@
 package com.alexeym.raccoon;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexeym.raccoon.data.Project;
@@ -42,6 +44,21 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             }
             return true;
         });
+        // Сбрасываем состояние ВСЕГДА
+        holder.tvTitle.setPaintFlags(holder.tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        holder.tvTitle.setTextColor(
+                ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_text_primary)
+        );
+
+        // Применяем состояние для завершённых
+        if (project.type == 1) {
+            holder.tvTitle.setPaintFlags(
+                    holder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG
+            );
+            holder.tvTitle.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_accent_alt)
+            );
+        }
     }
 
     @Override

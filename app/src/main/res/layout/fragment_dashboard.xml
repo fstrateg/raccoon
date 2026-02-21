@@ -3,27 +3,59 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/sc_background"
+    android:padding="24dp">
 
+    <!-- Баланс -->
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Balance: 0"
-        android:textSize="24sp"
+        android:text="0"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/sc_accent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/btn_add_test"
+    <!-- Цель -->
+    <TextView
+        android:id="@+id/tv_goal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Test +1000"
+        android:text="/ 10000"
+        android:textSize="18sp"
+        android:textColor="@color/sc_text_secondary"
+        app:layout_constraintBottom_toBottomOf="@id/tv_balance"
+        app:layout_constraintStart_toEndOf="@id/tv_balance"
+        android:layout_marginStart="8dp"/>
+
+    <!-- Процент -->
+    <TextView
+        android:id="@+id/tv_percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textSize="18sp"
+        android:textColor="@color/sc_accent_alt"
         app:layout_constraintTop_toBottomOf="@id/tv_balance"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Прогресс -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="@color/sc_accent"
+        android:backgroundTint="@color/sc_surface"
+        app:layout_constraintTop_toBottomOf="@id/tv_percent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="12dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
