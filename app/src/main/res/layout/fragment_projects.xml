@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:contentDescription="Add Project"
         android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/sc_surface"
+        app:tint="@color/sc_accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"/>

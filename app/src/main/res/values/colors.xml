@@ -8,4 +8,5 @@
     <color name="sc_accent_alt">#00FF88</color>
     <color name="sc_text_primary">#E0F7FA</color>
     <color name="sc_text_secondary">#80DEEA</color>
+    <color name="sc_hint">#317983</color>
 </resources>

@@ -7,4 +7,19 @@
         <item name="colorSurface">@color/sc_surface</item>
 
     </style>
+    <style name="RaccoonDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+
+        <item name="colorSurface">@color/sc_surface</item>
+        <item name="android:background">@color/sc_surface</item>
+        <item name="android:textColorPrimary">@color/sc_text_primary</item>
+        <item name="android:textColorSecondary">@color/sc_text_secondary</item>
+
+        <item name="buttonBarPositiveButtonStyle">@style/RaccoonDialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/RaccoonDialogButton</item>
+
+    </style>
+
+    <style name="RaccoonDialogButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/sc_accent</item>
+    </style>
 </resources>

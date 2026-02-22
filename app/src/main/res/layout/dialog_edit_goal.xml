@@ -2,40 +2,31 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@drawable/dialog_background"
     android:padding="24dp"
+    android:background="@drawable/dialog_background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Project"
+        android:text="Set Goal"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/sc_accent"
         android:paddingBottom="16dp"/>
 
     <EditText
-        android:id="@+id/et_title"
+        android:id="@+id/et_goal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Project title"
+        android:hint="Goal"
+        android:inputType="number"
         android:textColor="@color/sc_text_primary"
-        android:textColorHint="@color/sc_hint"
+        android:textColorHint="@color/sc_text_secondary"
         android:backgroundTint="@color/sc_accent"/>
 
-    <EditText
-        android:id="@+id/et_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Amount"
-        android:inputType="number"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/sc_text_primary"
-        android:textColorHint="@color/sc_hint"
-        android:backgroundTint="@color/sc_accent"
-        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +51,6 @@
             android:textStyle="bold"
             android:padding="12dp"
             android:layout_marginStart="16dp"/>
-
     </LinearLayout>
+
 </LinearLayout>

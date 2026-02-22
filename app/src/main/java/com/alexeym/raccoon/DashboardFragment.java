@@ -1,7 +1,13 @@
 package com.alexeym.raccoon;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.text.NumberFormat;
@@ -17,9 +23,14 @@ import com.alexeym.raccoon.viewmodel.ProjectViewModel;
 
 public class DashboardFragment extends Fragment {
 
-    private static final int GOAL = 10000;
+    private static final String PREFS_NAME = "raccoon_prefs";
+    private static final String KEY_GOAL = "goal";
+    private Integer lastBalance = 0;
     private ProjectViewModel viewModel;
     private TextView tvBalance;
+    private TextView tvGoal;
+    private TextView tvPercent;
+    private ProgressBar progressBar;
 
     private final NumberFormat numberFormat =
             NumberFormat.getInstance(new Locale("ru", "RU"));
@@ -27,7 +38,36 @@ public class DashboardFragment extends Fragment {
     public DashboardFragment() {
         super(R.layout.fragment_dashboard);
     }
+    private int getGoal() {
+        return requireContext()
+                .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                .getInt(KEY_GOAL, 10000); // default 10k
+    }
 
+    private void saveGoal(int goal) {
+        requireContext()
+                .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                .edit()
+                .putInt(KEY_GOAL, goal)
+                .apply();
+    }
+
+    private void render(int balance) {
+        int goal = getGoal();
+
+        String formattedBalance = numberFormat.format(balance);
+        String formattedGoal = numberFormat.format(goal);
+
+        tvBalance.setText(formattedBalance);
+        tvGoal.setText("/ " + formattedGoal);
+
+        int percent = (int) ((balance * 100.0f) / goal);
+        if (percent > 100) percent = 100;
+        if (percent < 0) percent = 0;
+
+        tvPercent.setText(percent + "%");
+        progressBar.setProgress(percent);
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -36,28 +76,55 @@ public class DashboardFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
-        TextView tvGoal = view.findViewById(R.id.tv_goal);
-        TextView tvPercent = view.findViewById(R.id.tv_percent);
-        ProgressBar progressBar = view.findViewById(R.id.progress_bar);
+        tvGoal = view.findViewById(R.id.tv_goal);
+        tvPercent = view.findViewById(R.id.tv_percent);
+        progressBar = view.findViewById(R.id.progress_bar);
+        TextView btnEditGoal = view.findViewById(R.id.btn_edit_goal);
 
-
+        btnEditGoal.setOnClickListener(v -> showGoalDialog());
 
         viewModel.getBalance().observe(getViewLifecycleOwner(), balance -> {
-
             if (balance == null) balance = 0;
-
-            String formattedBalance = numberFormat.format(balance);
-            String formattedGoal = numberFormat.format(GOAL);
-            tvGoal.setText("/ " + formattedGoal);
-            tvBalance.setText(String.valueOf(formattedBalance));
-
-            int percent = (int) ((balance * 100.0f) / GOAL);
-
-            if (percent > 100) percent = 100;
-            if (percent < 0) percent = 0;
-
-            tvPercent.setText(percent + "%");
-            progressBar.setProgress(percent);
+            lastBalance = balance;
+            render(balance);
         });
     }
+    private void showGoalDialog() {
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_goal, null);
+
+        EditText etGoal = dialogView.findViewById(R.id.et_goal);
+        TextView btnSave = dialogView.findViewById(R.id.btn_save);
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
+
+        etGoal.setText(String.valueOf(getGoal()));
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.RaccoonDialogTheme)
+                .setView(dialogView)
+                .create();
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        btnSave.setOnClickListener(v -> {
+            String value = etGoal.getText().toString().trim();
+            if (value.isEmpty()) return;
+
+            int newGoal = Integer.parseInt(value);
+            if (newGoal <= 0) return; // защита от нуля
+
+            saveGoal(newGoal);
+
+            // Вот оно: цель изменилась, вручную перерисовываем по последнему балансу
+            render(lastBalance == null ? 0 : lastBalance);
+
+            dialog.dismiss();
+        });
+    }
+
 }

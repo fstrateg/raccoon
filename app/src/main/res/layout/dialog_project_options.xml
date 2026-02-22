@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/dialog_background"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Project Options"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/sc_accent"
+        android:paddingBottom="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/sc_surface"/>
+
+    <TextView
+        android:id="@+id/option_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark as Completed"
+        android:textColor="@color/sc_text_primary"
+        android:padding="16dp"/>
+
+    <TextView
+        android:id="@+id/option_in_work"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark as In Work"
+        android:textColor="@color/sc_text_primary"
+        android:padding="16dp"/>
+
+    <TextView
+        android:id="@+id/option_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColor="#FF5555"
+        android:padding="16dp"/>
+
+</LinearLayout>

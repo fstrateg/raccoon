@@ -1,5 +1,7 @@
 package com.alexeym.raccoon;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.alexeym.raccoon.data.Project;
 
 import com.alexeym.raccoon.viewmodel.ProjectViewModel;
@@ -53,54 +57,83 @@ public class ProjectsFragment extends Fragment {
         EditText etTitle = dialogView.findViewById(R.id.et_title);
         EditText etAmount = dialogView.findViewById(R.id.et_amount);
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Add Project")
+        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.RaccoonDialogTheme)
                 .setView(dialogView)
-                .setPositiveButton("Save", (dialog, which) -> {
+                .create();
 
-                    String title = etTitle.getText().toString().trim();
-                    String amountStr = etAmount.getText().toString().trim();
+        dialog.show();
 
-                    if (title.isEmpty() || amountStr.isEmpty()) return;
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
-                    int amount = Integer.parseInt(amountStr);
+        TextView btnSave = dialogView.findViewById(R.id.btn_save);
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
 
-                    Project project = new Project();
-                    project.title = title;
-                    project.amount = amount;
-                    project.type = 0; // in work
-                    project.createdAt = System.currentTimeMillis();
-                    project.updatedAt = System.currentTimeMillis();
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
 
-                    viewModel.insert(project);
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+        btnSave.setOnClickListener(v -> {
+
+            String title = etTitle.getText().toString().trim();
+            String amountStr = etAmount.getText().toString().trim();
+
+            if (title.isEmpty() || amountStr.isEmpty()) return;
+
+            int amount = Integer.parseInt(amountStr);
+
+            Project project = new Project();
+            project.title = title;
+            project.amount = amount;
+            project.type = 0;
+            project.createdAt = System.currentTimeMillis();
+            project.updatedAt = System.currentTimeMillis();
+
+            viewModel.insert(project);
+
+            dialog.dismiss();
+        });
+
     }
     private void showProjectOptions(Project project) {
 
-        String[] options = {"Mark as Completed", "Mark as In Work", "Delete"};
+        View dialogView = getLayoutInflater()
+                .inflate(R.layout.dialog_project_options, null);
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle(project.title)
-                .setItems(options, (dialog, which) -> {
+        AlertDialog dialog = new AlertDialog.Builder(
+                requireContext(),
+                R.style.RaccoonDialogTheme
+        )
+                .setView(dialogView)
+                .create();
 
-                    if (which == 0) {
-                        project.type = 1;
-                        project.updatedAt = System.currentTimeMillis();
-                        viewModel.update(project);
-                    }
+        dialog.show();
 
-                    if (which == 1) {
-                        project.type = 0;
-                        project.updatedAt = System.currentTimeMillis();
-                        viewModel.update(project);
-                    }
+        if (dialog.getWindow() != null) {
+            dialog.getWindow()
+                    .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
-                    if (which == 2) {
-                        viewModel.delete(project);
-                    }
-                })
-                .show();
+        TextView optionComplete = dialogView.findViewById(R.id.option_complete);
+        TextView optionInWork = dialogView.findViewById(R.id.option_in_work);
+        TextView optionDelete = dialogView.findViewById(R.id.option_delete);
+
+        optionComplete.setOnClickListener(v -> {
+            project.type = 1;
+            project.updatedAt = System.currentTimeMillis();
+            viewModel.update(project);
+            dialog.dismiss();
+        });
+
+        optionInWork.setOnClickListener(v -> {
+            project.type = 0;
+            project.updatedAt = System.currentTimeMillis();
+            viewModel.update(project);
+            dialog.dismiss();
+        });
+
+        optionDelete.setOnClickListener(v -> {
+            viewModel.delete(project);
+            dialog.dismiss();
+        });
     }
 }
