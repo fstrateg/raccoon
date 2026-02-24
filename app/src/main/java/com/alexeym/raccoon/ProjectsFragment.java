@@ -94,6 +94,92 @@ public class ProjectsFragment extends Fragment {
         });
 
     }
+
+    private void showEditDialog(Project project)
+    {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_project, null);
+        EditText etTitle = dialogView.findViewById(R.id.et_title);
+        EditText etAmount = dialogView.findViewById(R.id.et_amount);
+
+        TextView btnSave = dialogView.findViewById(R.id.btn_save);
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
+
+        TextView btnInWork = dialogView.findViewById(R.id.btn_status_in_work);
+        TextView btnCompleted = dialogView.findViewById(R.id.btn_status_completed);
+
+        // Заполняем текущими данными
+        etTitle.setText(project.title);
+        etAmount.setText(String.valueOf(project.amount));
+
+        // Текущий статус (через массив, чтобы менять внутри lambda)
+        final int[] currentStatus = { project.type };
+
+        // Обновление визуального состояния статуса
+        Runnable updateStatusUI = () -> {
+
+            if (currentStatus[0] == 0) {
+
+                btnInWork.setBackgroundResource(R.drawable.status_button_active);
+                btnCompleted.setBackgroundResource(R.drawable.status_button_inactive);
+
+                btnInWork.setTextColor(getResources().getColor(R.color.sc_accent));
+                btnCompleted.setTextColor(getResources().getColor(R.color.sc_text_primary));
+
+            } else {
+
+                btnCompleted.setBackgroundResource(R.drawable.status_button_active);
+                btnInWork.setBackgroundResource(R.drawable.status_button_inactive);
+
+                btnCompleted.setTextColor(getResources().getColor(R.color.sc_accent_alt));
+                btnInWork.setTextColor(getResources().getColor(R.color.sc_text_primary));
+            }
+        };
+
+        updateStatusUI.run();
+
+        btnInWork.setOnClickListener(v -> {
+            currentStatus[0] = 0;
+            updateStatusUI.run();
+        });
+
+        btnCompleted.setOnClickListener(v -> {
+            currentStatus[0] = 1;
+            updateStatusUI.run();
+        });
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext(), R.style.RaccoonDialogTheme)
+                .setView(dialogView)
+                .create();
+
+        dialog.show();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow()
+                    .setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
+
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        btnSave.setOnClickListener(v -> {
+
+            String title = etTitle.getText().toString().trim();
+            String amountStr = etAmount.getText().toString().trim();
+
+            if (title.isEmpty() || amountStr.isEmpty()) return;
+
+            int amount = Integer.parseInt(amountStr);
+            if (amount <= 0) return;
+
+            project.title = title;
+            project.amount = amount;
+            project.type = currentStatus[0];
+            project.updatedAt = System.currentTimeMillis();
+
+            viewModel.update(project);
+
+            dialog.dismiss();
+        });
+    }
     private void showProjectOptions(Project project) {
 
         View dialogView = getLayoutInflater()
@@ -113,9 +199,22 @@ public class ProjectsFragment extends Fragment {
                     .setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
+        TextView optionEdit = dialogView.findViewById(R.id.option_edit);
         TextView optionComplete = dialogView.findViewById(R.id.option_complete);
         TextView optionInWork = dialogView.findViewById(R.id.option_in_work);
         TextView optionDelete = dialogView.findViewById(R.id.option_delete);
+
+        if (project.type == 1) {
+            optionComplete.setVisibility(View.GONE);
+        } else {
+            optionInWork.setVisibility(View.GONE);
+        }
+
+        optionEdit.setOnClickListener(v -> {
+            dialog.dismiss();
+            showEditDialog(project);
+        });
+
 
         optionComplete.setOnClickListener(v -> {
             project.type = 1;

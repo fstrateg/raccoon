@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/dashboardFragment"
-        android:title="Dashboard"
+        android:title="@string/dashboard"
         android:icon="@android:drawable/ic_menu_view"/>
 
     <item
         android:id="@+id/projectsFragment"
-        android:title="Projects"
+        android:title="@string/projects"
         android:icon="@android:drawable/ic_menu_agenda"/>
 
     <item
         android:id="@+id/expensesFragment"
-        android:title="Expenses"
+        android:title="@string/expenses"
         android:icon="@android:drawable/ic_menu_compass"/>
 
 </menu>

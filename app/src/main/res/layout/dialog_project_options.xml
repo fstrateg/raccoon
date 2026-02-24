@@ -11,7 +11,7 @@
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Project Options"
+        android:text="@string/project_options"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/sc_accent"
@@ -23,26 +23,34 @@
         android:background="@color/sc_surface"/>
 
     <TextView
+        android:id="@+id/option_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit"
+        android:textColor="@color/sc_accent"
+        android:padding="16dp"/>
+
+    <TextView
         android:id="@+id/option_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mark as Completed"
-        android:textColor="@color/sc_text_primary"
+        android:text="@string/mark_completed"
+        android:textColor="@color/sc_accent"
         android:padding="16dp"/>
 
     <TextView
         android:id="@+id/option_in_work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mark as In Work"
-        android:textColor="@color/sc_text_primary"
+        android:text="@string/mark_in_work"
+        android:textColor="@color/sc_accent"
         android:padding="16dp"/>
 
     <TextView
         android:id="@+id/option_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete"
+        android:text="@string/delete"
         android:textColor="#FF5555"
         android:padding="16dp"/>
 

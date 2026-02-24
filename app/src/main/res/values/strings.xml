@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Raccoon</string>
+    <string name="dashboard">Панель</string>
+    <string name="projects">Проекты</string>
+    <string name="expenses">Расходы</string>
+
+    <string name="add_project">Добавить проект</string>
+    <string name="edit_project">Редактировать проект</string>
+    <string name="project_options">Действия</string>
+
+    <string name="project_title">Название проекта</string>
+    <string name="amount">Сумма</string>
+
+    <string name="status">Статус</string>
+    <string name="in_work">В работе</string>
+    <string name="completed">Завершён</string>
+
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
+
+    <string name="mark_completed">Завершённый</string>
+    <string name="mark_in_work">В работе</string>
+    <string name="edit">Редактировать</string>
+
+    <string name="set_goal">Установить цель</string>
+    <string name="goal">Цель</string>
 </resources>
