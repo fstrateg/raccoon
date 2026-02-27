@@ -12,6 +12,7 @@
     <string name="amount">Сумма</string>
 
     <string name="status">Статус</string>
+    <string name="all">Все</string>
     <string name="in_work">В работе</string>
     <string name="completed">Завершён</string>
 

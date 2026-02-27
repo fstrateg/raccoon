@@ -30,4 +30,10 @@ public interface ProjectDao {
     @Query("SELECT SUM(CASE WHEN type = 1 THEN amount WHEN type = -1 THEN -amount ELSE 0 END ) "+
             "FROM projects")
     LiveData<Integer> getBalance();
+
+    @Query("SELECT * FROM projects ORDER BY CASE WHEN type = 0 THEN 0 WHEN type = 1 THEN 1 ELSE 2 END, updatedAt DESC")
+    LiveData<List<Project>> getAllSorted();
+
+    @Query("SELECT * FROM projects WHERE type = :type ORDER BY updatedAt DESC")
+    LiveData<List<Project>> getByTypeSorted(int type);
 }

@@ -42,9 +42,29 @@ public class ProjectsFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(ProjectViewModel.class);
 
-        viewModel.getAllProjects().observe(getViewLifecycleOwner(), projects -> {
-            adapter.setProjects(projects);
-        });
+        TextView btnAll = view.findViewById(R.id.btn_filter_all);
+        TextView btnInWork = view.findViewById(R.id.btn_filter_in_work);
+        TextView btnCompleted = view.findViewById(R.id.btn_filter_completed);
+
+        Runnable updateFilterUI = () -> {
+            int f = viewModel.getCurrentFilter();
+
+            btnAll.setBackgroundResource(f == ProjectViewModel.FILTER_ALL ? R.drawable.status_button_active : R.drawable.status_button_inactive);
+            btnInWork.setBackgroundResource(f == ProjectViewModel.FILTER_IN_WORK ? R.drawable.status_button_active : R.drawable.status_button_inactive);
+            btnCompleted.setBackgroundResource(f == ProjectViewModel.FILTER_COMPLETED ? R.drawable.status_button_active : R.drawable.status_button_inactive);
+
+            btnAll.setTextColor(getResources().getColor(f == ProjectViewModel.FILTER_ALL ? R.color.sc_accent : R.color.sc_text_primary));
+            btnInWork.setTextColor(getResources().getColor(f == ProjectViewModel.FILTER_IN_WORK ? R.color.sc_accent : R.color.sc_text_primary));
+            btnCompleted.setTextColor(getResources().getColor(f == ProjectViewModel.FILTER_COMPLETED ? R.color.sc_accent_alt : R.color.sc_text_primary));
+        };
+
+        btnAll.setOnClickListener(v -> { viewModel.setFilter(ProjectViewModel.FILTER_ALL); updateFilterUI.run(); });
+        btnInWork.setOnClickListener(v -> { viewModel.setFilter(ProjectViewModel.FILTER_IN_WORK); updateFilterUI.run(); });
+        btnCompleted.setOnClickListener(v -> { viewModel.setFilter(ProjectViewModel.FILTER_COMPLETED); updateFilterUI.run(); });
+
+        updateFilterUI.run();
+
+        viewModel.getProjects().observe(getViewLifecycleOwner(), projects -> adapter.setProjects(projects));
 
         FloatingActionButton fab = view.findViewById(R.id.fab_add_project);
 

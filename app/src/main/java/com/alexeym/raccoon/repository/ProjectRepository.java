@@ -31,6 +31,14 @@ public class ProjectRepository {
         return projectDao.getByType(type);
     }
 
+    public LiveData<List<Project>> getAllProjectsSorted() {
+        return projectDao.getAllSorted();
+    }
+
+    public LiveData<List<Project>> getProjectsByTypeSorted(int type) {
+        return projectDao.getByTypeSorted(type);
+    }
+
     public LiveData<Integer> getBalance() {
         return projectDao.getBalance();
     }
