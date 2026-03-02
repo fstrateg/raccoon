@@ -26,4 +26,9 @@
 
     <string name="set_goal">Установить цель</string>
     <string name="goal">Цель</string>
+
+    <!-- Expenses -->
+    <string name="expenses_add_title">Добавить расход</string>
+    <string name="expenses_edit_title">Редактировать расход</string>
+    <string name="expense_title_hint">На что потратил</string>
 </resources>

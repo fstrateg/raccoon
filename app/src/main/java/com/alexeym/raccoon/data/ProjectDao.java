@@ -27,8 +27,7 @@ public interface ProjectDao {
     @Query("SELECT * FROM projects WHERE type = :type ORDER BY createdAt DESC")
     LiveData<List<Project>> getByType(int type);
 
-    @Query("SELECT SUM(CASE WHEN type = 1 THEN amount WHEN type = -1 THEN -amount ELSE 0 END ) "+
-            "FROM projects")
+    @Query("SELECT COALESCE(SUM(CASE WHEN type = 1 THEN amount WHEN type = -1 THEN -amount ELSE 0 END), 0) FROM projects")
     LiveData<Integer> getBalance();
 
     @Query("SELECT * FROM projects ORDER BY CASE WHEN type = 0 THEN 0 WHEN type = 1 THEN 1 ELSE 2 END, updatedAt DESC")
@@ -36,4 +35,7 @@ public interface ProjectDao {
 
     @Query("SELECT * FROM projects WHERE type = :type ORDER BY updatedAt DESC")
     LiveData<List<Project>> getByTypeSorted(int type);
+
+    @Query("SELECT * FROM projects WHERE type = -1 ORDER BY updatedAt DESC")
+    LiveData<List<Project>> getExpensesSorted();
 }
