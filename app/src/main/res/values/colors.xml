@@ -9,4 +9,5 @@
     <color name="sc_text_primary">#E0F7FA</color>
     <color name="sc_text_secondary">#80DEEA</color>
     <color name="sc_hint">#317983</color>
+    <color name="sc_red">#FF2F00</color>
 </resources>

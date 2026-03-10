@@ -36,6 +36,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
         Project expense = expenses.get(position);
         holder.tvTitle.setText(expense.title);
         holder.tvAmount.setText(String.valueOf(expense.amount));
+        holder.tvAmount.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.sc_red));
         holder.itemView.setOnLongClickListener(v -> {
             if (listener != null) {
                 listener.onLongClick(expense);

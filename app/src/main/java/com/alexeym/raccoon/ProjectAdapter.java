@@ -58,6 +58,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             holder.tvTitle.setTextColor(
                     ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_accent_alt)
             );
+            holder.tvAmount.setTextColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_accent_alt)
+            );
+            holder.tvAmount.setPaintFlags(
+                    holder.tvAmount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG
+            );
         }
     }
 
