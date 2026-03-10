@@ -49,6 +49,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         holder.tvTitle.setTextColor(
                 ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_text_primary)
         );
+        holder.tvAmount.setTextColor(
+                ContextCompat.getColor(holder.itemView.getContext(), R.color.sc_accent)
+        );
+        holder.tvAmount.setPaintFlags(holder.tvAmount.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
         // Применяем состояние для завершённых
         if (project.type == 1) {
