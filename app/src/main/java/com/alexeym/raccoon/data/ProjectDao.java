@@ -38,4 +38,7 @@ public interface ProjectDao {
 
     @Query("SELECT * FROM projects WHERE type = -1 ORDER BY updatedAt DESC")
     LiveData<List<Project>> getExpensesSorted();
+
+    @Query("DELETE FROM projects WHERE type != 0")
+    void clearCompletedAndExpenses();
 }

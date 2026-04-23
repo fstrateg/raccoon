@@ -26,9 +26,16 @@
 
     <string name="set_goal">Установить цель</string>
     <string name="goal">Цель</string>
+    <string name="finalize_goal">Подвести итоги</string>
+    <string name="btn_no">Нет</string>
+    <string name="btn_yes">Да</string>
 
     <!-- Expenses -->
     <string name="expenses_add_title">Добавить расход</string>
     <string name="expenses_edit_title">Редактировать расход</string>
     <string name="expense_title_hint">На что потратил</string>
+
+    <!-- Errors and Toasts -->
+    <string name="error_fill_fields">Заполните все поля</string>
+    <string name="error_amount_positive">Сумма должна быть больше 0</string>
 </resources>

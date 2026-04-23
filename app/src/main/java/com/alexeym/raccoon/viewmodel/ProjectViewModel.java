@@ -59,6 +59,10 @@ public class ProjectViewModel extends AndroidViewModel {
         Integer v = filter.getValue();
         return v == null ? FILTER_ALL : v;
     }
+
+    public void clearCompletedAndExpenses() {
+        repository.clearCompletedAndExpenses();
+    }
     public void insert(Project project) {
         repository.insert(project);
     }

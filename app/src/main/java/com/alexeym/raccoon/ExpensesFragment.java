@@ -66,13 +66,13 @@ public class ExpensesFragment extends Fragment {
             String amountStr = etAmount.getText().toString().trim();
 
             if (title.isEmpty() || amountStr.isEmpty()) {
-                Toast.makeText(getContext(), "Заполните все поля", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.error_fill_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int amount = Integer.parseInt(amountStr);
             if (amount <= 0) {
-                Toast.makeText(getContext(), "Сумма должна быть больше 0", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.error_amount_positive), Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -136,7 +136,7 @@ public class ExpensesFragment extends Fragment {
             String amountStr = etAmount.getText().toString().trim();
 
             if (title.isEmpty() || amountStr.isEmpty()) {
-                Toast.makeText(getContext(), "Заполните все поля", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.error_fill_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 

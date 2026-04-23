@@ -5,11 +5,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -96,6 +96,7 @@ public class DashboardFragment extends Fragment {
         EditText etGoal = dialogView.findViewById(R.id.et_goal);
         TextView btnSave = dialogView.findViewById(R.id.btn_save);
         TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
+        TextView btnFinalize = dialogView.findViewById(R.id.btn_finalize);
 
         etGoal.setText(String.valueOf(getGoal()));
 
@@ -124,6 +125,40 @@ public class DashboardFragment extends Fragment {
             render(lastBalance == null ? 0 : lastBalance);
 
             dialog.dismiss();
+        });
+
+        btnFinalize.setOnClickListener(v -> {
+
+            View confirmView = getLayoutInflater().inflate(R.layout.dialog_confirm, null);
+
+            AlertDialog confirmDialog = new AlertDialog.Builder(requireContext(), R.style.RaccoonDialogTheme)
+                    .setView(confirmView)
+                    .create();
+
+            confirmDialog.show();
+
+            if (confirmDialog.getWindow() != null) {
+                confirmDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            }
+
+            TextView btnYes = confirmView.findViewById(R.id.btn_yes);
+            TextView btnNo = confirmView.findViewById(R.id.btn_no);
+
+            btnNo.setOnClickListener(v1 -> confirmDialog.dismiss());
+
+            btnYes.setOnClickListener(v1 -> {
+
+                int balance = lastBalance == null ? 0 : lastBalance;
+
+                viewModel.clearCompletedAndExpenses();
+
+                Toast.makeText(requireContext(),
+                        "Итог: " + NumberFormat.getInstance().format(balance) + " енотов",
+                        Toast.LENGTH_LONG).show();
+
+                confirmDialog.dismiss();
+                dialog.dismiss();
+            });
         });
     }
 

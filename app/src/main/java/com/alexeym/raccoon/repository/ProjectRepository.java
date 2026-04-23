@@ -47,6 +47,11 @@ public class ProjectRepository {
         return projectDao.getBalance();
     }
 
+    public void clearCompletedAndExpenses() {
+        executor.execute(() -> {
+            projectDao.clearCompletedAndExpenses();
+        });
+    }
     public void insert(Project project) {
         executor.execute(() -> projectDao.insert(project));
     }

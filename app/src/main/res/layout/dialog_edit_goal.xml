@@ -21,11 +21,21 @@
         android:id="@+id/et_goal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/"
+        android:hint="@string/amount"
         android:inputType="number"
         android:textColor="@color/sc_text_primary"
         android:textColorHint="@color/sc_text_secondary"
         android:backgroundTint="@color/sc_accent"/>
+
+    <TextView
+        android:id="@+id/btn_finalize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/finalize_goal"
+        android:textColor="#FF5555"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,6 +61,9 @@
             android:textStyle="bold"
             android:padding="12dp"
             android:layout_marginStart="16dp"/>
+
+
     </LinearLayout>
+
 
 </LinearLayout>
